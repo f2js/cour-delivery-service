@@ -1,0 +1,35 @@
+{
+  "name": "deliveryservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:prod": "nodemon server.js",
+    "start:dev": "nodemon server.js",
+    "test": "jest --forceExit --runInBand"
+  },
+  "author": "Josef Marc Pedersen",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "kafka-node": "^5.0.0",
+    "kafkajs": "^2.2.3",
+    "mongodb": "^4.12.0",
+    "mongoose": "^6.7.2",
+    "nodemon": "^2.0.20",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "@shelf/jest-mongodb": "^4.1.3",
+    "jest": "^29.3.1",
+    "mongodb-memory-server": "^8.10.0",
+    "nodemon": "^2.0.19",
+    "prettier": "2.7.1",
+    "supertest": "^6.3.1"
+  }
+}
