@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: deliveryservice
+  labels:
+    app: web
+spec:
+  containers:
+    - name: test-end
+      image: f2js/deliveryservice:latest
+      ports:
+        - containerPort: 8080
