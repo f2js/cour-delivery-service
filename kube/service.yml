@@ -4,7 +4,7 @@ metadata:
   name: load-balancer-delivery-service
   namespace: default
   labels:
-    app: web
+    app.kubernetes.io/name: deliveryservice
 spec:
   type: LoadBalancer
   ports:
