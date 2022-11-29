@@ -36,10 +36,9 @@ afterAll(async () => {
 describe("GET /ordersReady", () => {
   test("No token | Access denied", async () => {
     const response = await request.get(`/delivery/ordersReady`);
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(401);
     expect(response._body).toBeTruthy();
   });
-
   /*
   test("Token | Access granted", async () => {
     const response = await request
