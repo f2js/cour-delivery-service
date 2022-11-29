@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: deliveryservice
   labels:
-    app: web
+    app.kubernetes.io/name: deliveryservice
 spec:
   containers:
     - name: test-end
