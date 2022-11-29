@@ -5,7 +5,7 @@ const xss = require("xss-clean");
 const cors = require("cors");
 
 const app = express();
-const KafkaOrder = require("./Services/KafkaConsumerProd");
+const { KafkaOrder } = require("./Services/KafkaConsumerProd");
 
 app.use(bodyParser.json());
 app.use(helmet());
@@ -13,9 +13,6 @@ app.use(xss());
 app.use(cors());
 
 const deliveryRouter = require("./Routes/deliveryRouter");
-const {
-  getOrdersReadyForDelivery,
-} = require("./Controllers/deliveryController");
 
 app.use("/delivery", deliveryRouter);
 
