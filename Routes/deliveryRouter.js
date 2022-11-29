@@ -8,6 +8,13 @@ const {
   acceptOrder,
   rejectOrder,
 } = require("../Controllers/deliveryController");
+const JWTverify = require("../Middleware/verifyToken");
+
+const USE_AUTH = !process.env["SKIP_AUTH"];
+
+if (USE_AUTH) {
+  router.use(JWTverify);
+}
 
 router.route("/ordersReady").get(getOrdersReadyForPickup);
 router.route("/ordersReady/accept").post(acceptOrder);
