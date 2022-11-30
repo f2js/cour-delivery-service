@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: deliveryservice
+  name: cour-delivery
   labels:
-    app.kubernetes.io/name: deliveryservice
+    app.kubernetes.io/name: cour-delivery
 spec:
   containers:
-    - name: test-end
-      image: f2js/deliveryservice:latest
+    - name: cour-delivery
+      image: f2js/cour-delivery:latest
       ports:
         - containerPort: 8080
