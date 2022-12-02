@@ -5,9 +5,9 @@ const kafka = new Kafka({
   brokers: ["localhost:9092"],
 });
 
-const producer = kafka.producer();
-
 exports.OrderAcceptedEvent = async (orderId, courierId) => {
+  const producer = kafka.producer();
+
   await producer.connect();
   await producer.send({
     topic: "OrderAccepted",
@@ -24,6 +24,7 @@ exports.OrderAcceptedEvent = async (orderId, courierId) => {
 };
 
 exports.OrderRejectedEvent = async (orderId) => {
+  const producer = kafka.producer();
   await producer.connect();
   await producer.send({
     topic: "OrderRejected",
@@ -39,6 +40,7 @@ exports.OrderRejectedEvent = async (orderId) => {
 };
 
 exports.OrderPickedUpEvent = async (orderId) => {
+  const producer = kafka.producer();
   await producer.connect();
   await producer.send({
     topic: "OrderPickedUp",
@@ -54,6 +56,7 @@ exports.OrderPickedUpEvent = async (orderId) => {
 };
 
 exports.OrderDeliveredEvent = async (orderId) => {
+  const producer = kafka.producer();
   await producer.connect();
   await producer.send({
     topic: "OrderDelivered",
