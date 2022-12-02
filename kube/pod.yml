@@ -11,8 +11,6 @@ spec:
       env:
         - name: "TOKEN_SECRET"
           value: ${TOKEN_SECRET}
-        - name: "TOKEN"
-          value: ${TOKEN}
         - name: "DB_URI"
           value: ${DB_URI}
         - name: "DB_NAME"
