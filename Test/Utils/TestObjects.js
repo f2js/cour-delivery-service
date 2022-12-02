@@ -33,6 +33,6 @@ order1 = { orderId: 2, postalCode: 4000 };
 order2 = { orderId: 3, postalCode: 3000 };
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyMSI6eyJfaWQiOiI2Mzc5MmQ1ODE2ZjM1MWViNzEwZWNkMmMiLCJuYW1lIjoiRnJlZGR5IEtydWVnZXIiLCJ1c2VybmFtZSI6InJlYWxzbGltZnJlZGR5IiwiZW1haWwiOiJmcmVkZHlAZnJlZGR5LmNvbSIsInBhc3N3b3JkIjoiYmxhYmxhYmxhIiwicm9sZSI6InVzZXIifSwiaWF0IjoxNjY5NzQ1OTk2fQ.VWqAMckqi-42ed_R6RWXEQ0OIEmZXNtMbPKFAGARy4Y";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzdiYmU1ZmVjZjhhMTAxM2M5MGIxNDAiLCJ1c2VybmFtZSI6InRlc3QiLCJlbWFpbCI6InRlc3RAZ2V0LmNvbSIsImZpcnN0bmFtZSI6IkZyZWRlcmlrIiwibGFzdG5hbWUiOiJEYWhsIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjkwNTQwNjV9.6D0GofcmGE3nONbMa_e8zw395TPmemH4d4sVqyTBNZM";
 
 module.exports = { user1, user2, user3, user4, token, order1, order2 };
