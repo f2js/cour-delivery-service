@@ -36,9 +36,9 @@ exports.getOrdersReadyForPickup = async (req, res) => {
     .find({ postalCode: postalCode })
     .toArray((err, orders) => {
       if (err) {
-        res.status(500).send(err);
+        res.status(500).send({ message: err });
       } else {
-        res.status(200).json(orders);
+        res.status(200).json({ message: orders });
       }
     });
 };
@@ -51,7 +51,7 @@ exports.acceptOrder = async (req, res) => {
   const { orderId, courierId } = req.body;
 
   if (!isValidObjectId(courierId)) {
-    res.status(400).send("Invalid courier id");
+    res.status(400).send({ message: "Invalid courier id" });
     return;
   }
 
@@ -60,12 +60,12 @@ exports.acceptOrder = async (req, res) => {
   });
 
   if (courier === null) {
-    res.status(404).send("Courier not found");
+    res.status(404).send({ message: "Courier not found" });
     return;
   }
 
   if (courier.ordersAccepted.length >= 1) {
-    res.status(400).send("Courier already has an order");
+    res.status(400).send({ message: "Courier already has an order" });
     return;
   }
 
@@ -74,12 +74,14 @@ exports.acceptOrder = async (req, res) => {
   });
 
   if (order === null) {
-    res.status(404).send("Order not found");
+    res.status(404).send({ message: "Order not found" });
     return;
   }
 
   if (courier.postalCode !== order.postalCode) {
-    res.status(400).send("Courier and order are not in the same postal code");
+    res
+      .status(400)
+      .send({ message: "Courier and order are not in the same postal code" });
     return;
   }
 
@@ -95,7 +97,7 @@ exports.acceptOrder = async (req, res) => {
             res.status(500);
           } else {
             await OrderAcceptedEvent(orderId, courierId);
-            res.status(200).send("Order accepted");
+            res.status(200).send({ message: "Order accepted" });
           }
         });
       }
@@ -110,7 +112,7 @@ exports.rejectOrder = async (req, res) => {
   const { orderId, courierId } = req.body;
 
   if (!isValidObjectId(courierId)) {
-    res.status(400).send("Invalid courier id");
+    res.status(400).send({ message: "Invalid courier id" });
     return;
   }
 
@@ -120,8 +122,7 @@ exports.rejectOrder = async (req, res) => {
   });
 
   if (courier === null) {
-    res.status(404).send("Courier not found");
-    return;
+    res.status(404).send({ message: "Courier not found" });
   }
 
   userCollection.updateOne(
@@ -132,7 +133,7 @@ exports.rejectOrder = async (req, res) => {
         res.status(500);
       } else {
         await OrderRejectedEvent(orderId);
-        res.status(200).send("Order rejected");
+        res.status(200).send({ message: "Order rejected" });
       }
     }
   );
@@ -140,7 +141,7 @@ exports.rejectOrder = async (req, res) => {
 
 exports.orderPickedUp = async (req, res) => {
   let db = await dbConnection.get();
-  let courierColelction = db.collection("courier");
+  let courierColelction = db.collection("users");
 
   const { orderId } = req.body;
 
@@ -149,15 +150,15 @@ exports.orderPickedUp = async (req, res) => {
   });
   if (courier) {
     await OrderPickedUpEvent(orderId);
-    res(200).send("Order picked up");
+    res(200).send({ message: "Order picked up" });
   } else {
-    return false; // no courier found
+    res(404).send({ message: "Courier not found" });
   }
 };
 
 exports.orderDelivered = async (req, res) => {
   let db = await dbConnection.get();
-  let courierColelction = db.collection("courier");
+  let courierColelction = db.collection("users");
 
   const { orderId } = req.body;
 
@@ -171,8 +172,8 @@ exports.orderDelivered = async (req, res) => {
     );
 
     await OrderDeliveredEvent(orderId);
-    res(200).send("Order delivered");
+    res(200).send({ message: "Order delivered" });
   } else {
-    return false; // no courier found
+    res(404).send({ message: "Courier not found" });
   }
 };

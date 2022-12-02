@@ -6,11 +6,9 @@ const kafka = new Kafka({
   brokers: ["localhost:9092"],
 });
 
-const consumer = kafka.consumer({ groupId: "test-group" });
-const producer = kafka.producer();
-
 exports.KafkaOrder = async () => {
   // Consuming
+  const consumer = kafka.consumer({ groupId: "test-group" });
   await consumer.connect();
   await consumer.subscribe({ topic: "OrderCreated", fromBeginning: true });
 
