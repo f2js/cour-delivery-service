@@ -42,15 +42,15 @@ afterAll(async () => {
   await DBConnection.close();
 });
 
-describe("GET /ordersReady", () => {
+describe("POST /ordersReady", () => {
   test("No token | Access denied", async () => {
-    const response = await request.get(`/delivery/ordersReady`);
+    const response = await request.post(`/delivery/ordersReady`);
     expect(response.status).toBe(401);
     expect(response._body).toBeTruthy();
   });
   test("Token | Access granted", async () => {
     const response = await request
-      .get(`/delivery/ordersReady`)
+      .post(`/delivery/ordersReady`)
       .set("auth-token", token);
     expect(response.status).toBe(200);
     expect(response._body).toBeTruthy();

@@ -16,10 +16,7 @@ exports.KafkaOrder = async () => {
     eachMessage: async ({ topic, partition, message }) => {
       const order = JSON.parse(message.value.toString());
 
-      const addedOrder = await setOrderReadyForPickup(
-        order.orderId,
-        order.postalCode
-      );
+      const addedOrder = await setOrderReadyForPickup(order);
 
       if (addedOrder) {
         console.log("Order added to ready for pickup", addedOrder);
