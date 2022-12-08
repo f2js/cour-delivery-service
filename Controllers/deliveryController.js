@@ -31,10 +31,10 @@ exports.setOrderReadyForPickup = async (order) => {
 exports.getOrdersReadyForPickup = async (req, res) => {
   const db = await dbConnection.get();
 
-  const { postalCode } = req.body;
+  const { o_id } = req.body;
 
   db.collection("orders")
-    .find({ postalCode: postalCode })
+    .find({ o_id: o_id })
     .toArray((err, orders) => {
       if (err) {
         res.status(500).send({ err });

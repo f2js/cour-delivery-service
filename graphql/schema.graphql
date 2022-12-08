@@ -20,7 +20,7 @@ type Order @key(fields: "id") {
 
 type Query {
   getAllUsers: [User]
-  getOrdersReadyForPickup(postalCode: Int): [Order]
+  getOrdersReadyForPickup(o_id: Int): [Order]
   acceptOrder(courierId: ID, orderId: Int): String
   rejectOrder(courierId: ID, orderId: Int): String
   orderPickedUp(courierId: ID, orderId: Int): String
