@@ -11,9 +11,9 @@ const {
 exports.setOrderReadyForPickup = async (order) => {
   const db = await dbConnection.get();
 
-  const { orderId } = order;
+  const { o_id } = order;
 
-  if ((await db.collection("orders").findOne({ orderId: orderId })) !== null) {
+  if ((await db.collection("orders").findOne({ o_id: o_id })) !== null) {
     console.log("Order already exists");
     return;
   }
