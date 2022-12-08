@@ -36,6 +36,7 @@ const dataSources = () => ({
 const server = new ApolloServer({
   schema: buildSubgraphSchema([{ typeDefs: schema, resolvers }]),
   dataSources: dataSources,
+  introspection: true,
 });
 
 // Apollo server
