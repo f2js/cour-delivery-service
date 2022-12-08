@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: cour-delivery-service
   namespace: default
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
+    service.beta.kubernetes.io/do-loadbalancer-certificate-id: ${CERT}
   labels:
     app: web
 spec:
