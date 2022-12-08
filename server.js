@@ -5,7 +5,6 @@ const { buildSubgraphSchema } = require("@apollo/subgraph");
 const { ApolloServer, gql } = require("apollo-server");
 const { MongoClient } = require("mongodb");
 
-const DeliveryAPI = require("./Controllers/deliveryAPI");
 const DeliveryRESTAPI = require("./Controllers/restDeliveryAPI");
 
 const resolvers = require("./graphql/resolvers");
@@ -30,10 +29,7 @@ const schema = gql(fs.readFileSync("./graphql/schema.graphql", "utf8"));
 const client = new MongoClient(process.env.DB_URI);
 client.connect();
 
-const database = client.db(process.env.DB_NAME);
-
 const dataSources = () => ({
-  deliveryAPI: new DeliveryAPI(database),
   deliveryRESTAPI: new DeliveryRESTAPI(),
 });
 
