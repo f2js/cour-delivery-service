@@ -18,7 +18,7 @@ const port = process.env.API_PORT || 3000;
 
 const config = {
   port: port,
-  host: "0.0.0.0",
+  host: "localhost",
 };
 
 dbConnection.connect();
