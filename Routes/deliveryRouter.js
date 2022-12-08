@@ -12,10 +12,10 @@ const {
 const JWTverify = require("../Middleware/verifyToken");
 
 const USE_AUTH = !process.env["SKIP_AUTH"];
-/*
+
 if (USE_AUTH) {
   router.use(JWTverify);
-}*/
+}
 
 router.route("/ordersReady").post(getOrdersReadyForPickup);
 router.route("/ordersReady/accept").post(acceptOrder);
