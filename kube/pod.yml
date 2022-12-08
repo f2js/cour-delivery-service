@@ -18,4 +18,4 @@ spec:
         - name: "NODE_ENV"
           value: production
       ports:
-        - containerPort: 8080
+        - containerPort: 4000
