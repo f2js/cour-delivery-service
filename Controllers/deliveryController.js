@@ -178,3 +178,10 @@ exports.orderDelivered = async (req, res) => {
     res.status(404).send({ message: "Courier not found" });
   }
 };
+
+exports.getAllUsers = async (req, res) => {
+  const db = await dbConnection.get();
+  const users = await db.collection("users").find().toArray();
+
+  res.status(200).json({ users });
+};
