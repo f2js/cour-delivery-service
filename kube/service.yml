@@ -12,9 +12,8 @@ spec:
   type: LoadBalancer
   ports:
     - nodePort: 0 # - a static port assigned on each the node
-    - name: graphql
-      port: 4000
-      targetPort: 4000
+      port: 4000 # - port exposed internally in the cluster
+      targetPort: 4000 # - the container port to send requests to
     - name: rest
       port: 3000
       targetPort: 3000
