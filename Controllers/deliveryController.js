@@ -29,6 +29,7 @@ exports.setOrderReadyForPickup = async (order) => {
 };
 
 exports.getOrdersReadyForPickup = async (req, res) => {
+  console.log("Lol");
   const db = await dbConnection.get();
 
   const { o_id } = req.body;
