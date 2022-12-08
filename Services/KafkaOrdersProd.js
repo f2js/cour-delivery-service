@@ -23,7 +23,7 @@ exports.OrderAcceptedEvent = async (orderId, courierId) => {
   await producer.disconnect();
 };
 
-exports.OrderRejectedEvent = async (orderId) => {
+exports.OrderRejectedEvent = async (orderId, courierId) => {
   const producer = kafka.producer();
   await producer.connect();
   await producer.send({
@@ -32,6 +32,7 @@ exports.OrderRejectedEvent = async (orderId) => {
       {
         value: JSON.stringify({
           orderId: orderId,
+          courierId: courierId,
         }),
       },
     ],
@@ -39,7 +40,7 @@ exports.OrderRejectedEvent = async (orderId) => {
   await producer.disconnect();
 };
 
-exports.OrderPickedUpEvent = async (orderId) => {
+exports.OrderPickedUpEvent = async (orderId, courierId) => {
   const producer = kafka.producer();
   await producer.connect();
   await producer.send({
@@ -48,6 +49,7 @@ exports.OrderPickedUpEvent = async (orderId) => {
       {
         value: JSON.stringify({
           orderId: orderId,
+          courierId: courierId,
         }),
       },
     ],
@@ -55,7 +57,7 @@ exports.OrderPickedUpEvent = async (orderId) => {
   await producer.disconnect();
 };
 
-exports.OrderDeliveredEvent = async (orderId) => {
+exports.OrderDeliveredEvent = async (orderId, courierId) => {
   const producer = kafka.producer();
   await producer.connect();
   await producer.send({
@@ -64,6 +66,7 @@ exports.OrderDeliveredEvent = async (orderId) => {
       {
         value: JSON.stringify({
           orderId: orderId,
+          courierId: courierId,
         }),
       },
     ],

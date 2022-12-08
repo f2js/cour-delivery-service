@@ -8,13 +8,13 @@ const {
   OrderRejectedEvent,
 } = require("../Services/KafkaOrdersProd");
 
-exports.setOrderReadyForPickup = async (orderId, postalCode) => {
+exports.setOrderReadyForPickup = async (order) => {
   const db = await dbConnection.get();
 
-  const order = { orderId, postalCode };
+  const { orderId } = order;
 
   if ((await db.collection("orders").findOne({ orderId: orderId })) !== null) {
-    res.status(400).send("Order already exists");
+    console.log("Order already exists");
     return;
   }
 
@@ -36,9 +36,9 @@ exports.getOrdersReadyForPickup = async (req, res) => {
     .find({ postalCode: postalCode })
     .toArray((err, orders) => {
       if (err) {
-        res.status(500).send({ message: err });
+        res.status(500).send({ err });
       } else {
-        res.status(200).json({ message: orders });
+        res.status(200).json({ orders });
       }
     });
 };
@@ -87,7 +87,7 @@ exports.acceptOrder = async (req, res) => {
 
   userCollection.updateOne(
     { _id: ObjectId(courierId) },
-    { $push: { ordersAccepted: orderId } },
+    { $push: { ordersAccepted: order } },
     (err, result) => {
       if (err) {
         res.status(500);
@@ -118,7 +118,6 @@ exports.rejectOrder = async (req, res) => {
 
   const courier = await userCollection.findOne({
     _id: ObjectId(courierId),
-    ordersAccepted: orderId,
   });
 
   if (courier === null) {
@@ -127,12 +126,12 @@ exports.rejectOrder = async (req, res) => {
 
   userCollection.updateOne(
     { _id: ObjectId(courierId) },
-    { $pull: { ordersAccepted: orderId } },
+    { $pull: { ordersAccepted: { orderId: orderId } } },
     async (err, result) => {
       if (err) {
         res.status(500);
       } else {
-        await OrderRejectedEvent(orderId);
+        await OrderRejectedEvent(orderId, courierId);
         res.status(200).send({ message: "Order rejected" });
       }
     }
@@ -143,16 +142,17 @@ exports.orderPickedUp = async (req, res) => {
   let db = await dbConnection.get();
   let courierColelction = db.collection("users");
 
-  const { orderId } = req.body;
+  const { orderId, courierId } = req.body;
 
   let courier = await courierColelction.findOne({
-    ordersAccepted: { $in: [orderId] },
+    ordersAccepted: { $elemMatch: { orderId: orderId } },
   });
+
   if (courier) {
-    await OrderPickedUpEvent(orderId);
-    res(200).send({ message: "Order picked up" });
+    await OrderPickedUpEvent(orderId, courierId);
+    return res.status(200).send({ message: "Order picked up" });
   } else {
-    res(404).send({ message: "Courier not found" });
+    return res.status(404).send({ message: "Courier not found" });
   }
 };
 
@@ -163,17 +163,18 @@ exports.orderDelivered = async (req, res) => {
   const { orderId } = req.body;
 
   let courier = await courierColelction.findOne({
-    ordersAccepted: { $in: [orderId] },
+    ordersAccepted: { $elemMatch: { orderId: orderId } },
   });
+
   if (courier) {
     await courierColelction.updateOne(
       { _id: ObjectId(courier._id) },
-      { $pull: { ordersAccepted: orderId } }
+      { $pull: { ordersAccepted: { orderId: orderId } } }
     );
 
     await OrderDeliveredEvent(orderId);
-    res(200).send({ message: "Order delivered" });
+    res.status(200).send({ message: "Order delivered" });
   } else {
-    res(404).send({ message: "Courier not found" });
+    res.status(404).send({ message: "Courier not found" });
   }
 };

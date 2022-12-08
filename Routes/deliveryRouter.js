@@ -16,7 +16,7 @@ if (USE_AUTH) {
   router.use(JWTverify);
 }
 
-router.route("/ordersReady").get(getOrdersReadyForPickup);
+router.route("/ordersReady").post(getOrdersReadyForPickup);
 router.route("/ordersReady/accept").post(acceptOrder);
 
 router.route("/orderPickedUp").post(orderPickedUp);
