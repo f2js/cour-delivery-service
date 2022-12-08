@@ -14,10 +14,10 @@ spec:
     - name: graphql
       port: 4000
       targetPort: 4000
-      nodePort: 31501
+      nodePort: 0
     - name: rest
       port: 3000
       targetPort: 3000
-      nodePort: 31501
+      nodePort: 0
   selector:
     app.kubernetes.io/name: cour-delivery
