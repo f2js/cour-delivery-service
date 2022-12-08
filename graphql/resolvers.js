@@ -23,9 +23,5 @@ module.exports = {
     orderDelivered: async (parent, { orderId, courierId }, { dataSources }) => {
       return dataSources.deliveryRESTAPI.orderDelivered(orderId, courierId);
     },
-
-    getAllUsers: async (parent, args, { dataSources }) => {
-      return dataSources.deliveryRESTAPI.getAllUsers();
-    },
   },
 };

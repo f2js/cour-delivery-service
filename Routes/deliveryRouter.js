@@ -7,7 +7,6 @@ const {
   getOrdersReadyForPickup,
   acceptOrder,
   rejectOrder,
-  getAllUsers,
 } = require("../Controllers/deliveryController");
 const JWTverify = require("../Middleware/verifyToken");
 
@@ -23,6 +22,5 @@ router.route("/ordersReady/accept").post(acceptOrder);
 router.route("/orderPickedUp").post(orderPickedUp);
 router.route("/orderDelivered").post(orderDelivered);
 router.route("/orderRejected").post(rejectOrder);
-router.route("/allUsers").get(getAllUsers);
 
 module.exports = router;
