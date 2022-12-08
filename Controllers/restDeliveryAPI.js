@@ -1,7 +1,7 @@
 const { RESTDataSource } = require("@apollo/datasource-rest");
 
 class DeliveryRESTAPI extends RESTDataSource {
-  baseURL = "http://localhost:3000/delivery/";
+  baseURL = "http://10.245.132.173:3000/delivery/";
 
   mapResults(obj) {
     if (obj) {

@@ -21,3 +21,4 @@ spec:
           value: ${KAFKA_BROKER}
       ports:
         - containerPort: 4000
+        - containerPort: 3000
