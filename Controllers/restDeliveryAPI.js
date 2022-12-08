@@ -10,11 +10,6 @@ class DeliveryRESTAPI extends RESTDataSource {
     return obj;
   }
 
-  async getAllUsers() {
-    const { users } = await this.get("allUsers");
-    return users.map((user) => this.mapResults(user));
-  }
-
   async getOrdersReadyForPickup(o_id) {
     const { orders } = await this.post("ordersReady", { body: { o_id } });
     return orders.map((order) => this.mapResults(order));

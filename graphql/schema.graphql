@@ -13,14 +13,13 @@ type User @key(fields: "id") {
 
 type Order @key(fields: "id") {
   id: ID
-  orderId: Int
+  o_id: String
   cust_addr: String
   rest_addr: String
 }
 
 type Query {
-  getAllUsers: [User]
-  getOrdersReadyForPickup(o_id: Int): [Order]
+  getOrdersReadyForPickup(o_id: String): [Order]
   acceptOrder(courierId: ID, orderId: Int): String
   rejectOrder(courierId: ID, orderId: Int): String
   orderPickedUp(courierId: ID, orderId: Int): String
