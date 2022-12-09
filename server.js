@@ -18,7 +18,6 @@ const port = process.env.API_PORT || 3000;
 
 const config = {
   port: port,
-  host: "0.0.0.0",
 };
 
 dbConnection.connect();
@@ -33,7 +32,6 @@ const dataSources = () => ({
   deliveryRESTAPI: new DeliveryRESTAPI(),
 });
 
-/*
 const server = new ApolloServer({
   schema: buildSubgraphSchema([{ typeDefs: schema, resolvers }]),
   dataSources: dataSources,
@@ -44,19 +42,11 @@ const server = new ApolloServer({
 server.listen({ port: 4001 }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });
-*/
-if (process.env.NODE_ENV == "development") {
-  // REST server
-  app.listen(config.port, config.host, (e) => {
-    if (e) {
-      throw new Error("Error starting server");
-    }
-    console.log(
-      `App running locally without sslOptions on host: ${config.host} : port ${config.port}`
-    );
-  });
-} else {
-  https.createServer(app).listen(port, () => {
-    console.log(`App running on port ${port}`);
-  });
-}
+
+// REST server
+app.listen(config.port, config.host, (e) => {
+  if (e) {
+    throw new Error("Error starting server");
+  }
+  console.log(`App running locally without sslOptions port ${config.port}`);
+});

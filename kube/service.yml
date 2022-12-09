@@ -1,15 +1,18 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cour-delivery-service-temp
+  name: cour-delivery-service
   namespace: default
   labels:
     app: web
 spec:
   type: LoadBalancer
   ports:
-    - nodePort: 0 # - a static port assigned on each the node
+    - name: "graphql"
+      port: 4001
+      targetPort: 4001
+    - name: "rest" # - a static port assigned on each the node
       port: 3000 # - port exposed internally in the cluster
       targetPort: 3000 # - the container port to send requests to
   selector:
-    app.kubernetes.io/name: cour-delivery-temp
+    app.kubernetes.io/name: cour-delivery
