@@ -3,16 +3,13 @@ kind: Service
 metadata:
   name: cour-delivery-service-temp
   namespace: default
-  annotations:
-    service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
-    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "${CERT}"
   labels:
     app: web
 spec:
   type: LoadBalancer
   ports:
     - nodePort: 0 # - a static port assigned on each the node
-      port: 8080 # - port exposed internally in the cluster
-      targetPort: 8080 # - the container port to send requests to
+      port: 3000 # - port exposed internally in the cluster
+      targetPort: 3000 # - the container port to send requests to
   selector:
     app.kubernetes.io/name: cour-delivery-temp
