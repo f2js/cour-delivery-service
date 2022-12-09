@@ -180,3 +180,7 @@ exports.orderDelivered = async (req, res) => {
     res.status(404).send({ message: "Courier not found" });
   }
 };
+
+exports.helloWorld = async (req, res) => {
+  res.status(200).send({ message: "Hello world" });
+};
