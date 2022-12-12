@@ -17,5 +17,8 @@ spec:
           value: ${DB_NAME}
         - name: "NODE_ENV"
           value: production
+        - name: "KAFKA_BROKER"
+          value: ${KAFKA_BROKER}
       ports:
-        - containerPort: 8080
+        - containerPort: 3000
+        - containerPort: 4001

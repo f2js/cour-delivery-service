@@ -9,6 +9,7 @@ const {
   rejectOrder,
 } = require("../Controllers/deliveryController");
 
+
 router.route("/ordersReady").post(getOrdersReadyForPickup);
 router.route("/ordersReady/accept").post(acceptOrder);
 

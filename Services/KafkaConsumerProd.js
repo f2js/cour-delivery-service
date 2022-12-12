@@ -3,7 +3,7 @@ const { setOrderReadyForPickup } = require("../Controllers/deliveryController");
 
 const kafka = new Kafka({
   clientId: "my-app",
-  brokers: ["localhost:9092"],
+  brokers: [process.env.KAFKA_BROKER],
 });
 
 exports.KafkaOrder = async () => {
