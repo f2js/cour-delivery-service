@@ -1,11 +1,7 @@
 module.exports = {
   Query: {
-    getOrdersReadyForPickup: async (
-      parent,
-      { postalCode },
-      { dataSources }
-    ) => {
-      return dataSources.deliveryRESTAPI.getOrdersReadyForPickup(postalCode);
+    getOrdersReadyForPickup: async (parent, { o_id }, { dataSources }) => {
+      return dataSources.deliveryRESTAPI.getOrdersReadyForPickup(o_id);
     },
 
     acceptOrder: async (parent, { o_id, courierId }, { dataSources }) => {

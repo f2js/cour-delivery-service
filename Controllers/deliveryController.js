@@ -28,12 +28,13 @@ exports.setOrderReadyForPickup = async (order) => {
 };
 
 exports.getOrdersReadyForPickup = async (req, res) => {
+  console.log("Lol");
   const db = await dbConnection.get();
 
-  const { postalCode } = req.body;
+  const { o_id } = req.body;
 
   db.collection("orders")
-    .find({ postalCode: postalCode })
+    .find({ o_id: o_id })
     .toArray((err, orders) => {
       if (err) {
         res.status(500).send({ err });
@@ -177,4 +178,8 @@ exports.orderDelivered = async (req, res) => {
 
   await OrderDeliveredEvent(o_id);
   res.status(200).send({ message: "Order delivered" });
+};
+
+exports.helloWorld = async (req, res) => {
+  res.status(200).send({ message: "Hello world" });
 };
