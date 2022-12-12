@@ -1,28 +1,21 @@
-extend schema
-  @link(
-    url: "https://specs.apollo.dev/federation/v2.0"
-    import: ["@key", "@shareable"]
-  )
-
-type User @key(fields: "id") {
+type User {
   id: ID
   name: String
   postalCode: Int
   ordersAccepted: [Order]
 }
 
-type Order @key(fields: "id") {
+type Order {
   id: ID
-  orderId: Int
+  o_id: String
   cust_addr: String
   rest_addr: String
 }
 
 type Query {
-  getAllUsers: [User]
-  getOrdersReadyForPickup(postalCode: Int): [Order]
-  acceptOrder(courierId: ID, orderId: Int): String
-  rejectOrder(courierId: ID, orderId: Int): String
-  orderPickedUp(courierId: ID, orderId: Int): String
-  orderDelivered(courierId: ID, orderId: Int): String
+  getOrdersReadyForPickup(o_id: String): [Order]
+  acceptOrder(courierId: ID, o_id: String): String
+  rejectOrder(courierId: ID, o_id: String): String
+  orderPickedUp(courierId: ID, o_id: String): String
+  orderDelivered(o_id: String): String
 }

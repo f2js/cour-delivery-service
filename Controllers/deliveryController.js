@@ -11,9 +11,9 @@ const {
 exports.setOrderReadyForPickup = async (order) => {
   const db = await dbConnection.get();
 
-  const { orderId } = order;
+  const { o_id } = order;
 
-  if ((await db.collection("orders").findOne({ orderId: orderId })) !== null) {
+  if ((await db.collection("orders").findOne({ o_id: o_id })) !== null) {
     console.log("Order already exists");
     return;
   }
@@ -48,7 +48,7 @@ exports.acceptOrder = async (req, res) => {
   let userCollection = db.collection("users");
   let orderColection = db.collection("orders");
 
-  const { orderId, courierId } = req.body;
+  const { o_id, courierId } = req.body;
 
   if (!isValidObjectId(courierId)) {
     res.status(400).send({ message: "Invalid courier id" });
@@ -70,7 +70,7 @@ exports.acceptOrder = async (req, res) => {
   }
 
   const order = await orderColection.findOne({
-    orderId: orderId,
+    o_id: o_id,
   });
 
   if (order === null) {
@@ -92,11 +92,11 @@ exports.acceptOrder = async (req, res) => {
       if (err) {
         res.status(500);
       } else {
-        orderColection.deleteOne({ orderId: orderId }, async (err, result) => {
+        orderColection.deleteOne({ o_id: o_id }, async (err, result) => {
           if (err) {
             res.status(500);
           } else {
-            await OrderAcceptedEvent(orderId, courierId);
+            await OrderAcceptedEvent(o_id, courierId);
             res.status(200).send({ message: "Order accepted" });
           }
         });
@@ -109,7 +109,7 @@ exports.rejectOrder = async (req, res) => {
   const db = await dbConnection.get();
   let userCollection = db.collection("users");
 
-  const { orderId, courierId } = req.body;
+  const { o_id, courierId } = req.body;
 
   if (!isValidObjectId(courierId)) {
     res.status(400).send({ message: "Invalid courier id" });
@@ -126,12 +126,12 @@ exports.rejectOrder = async (req, res) => {
 
   userCollection.updateOne(
     { _id: ObjectId(courierId) },
-    { $pull: { ordersAccepted: { orderId: orderId } } },
+    { $pull: { ordersAccepted: { o_id: o_id } } },
     async (err, result) => {
       if (err) {
         res.status(500);
       } else {
-        await OrderRejectedEvent(orderId, courierId);
+        await OrderRejectedEvent(o_id, courierId);
         res.status(200).send({ message: "Order rejected" });
       }
     }
@@ -142,14 +142,14 @@ exports.orderPickedUp = async (req, res) => {
   let db = await dbConnection.get();
   let courierColelction = db.collection("users");
 
-  const { orderId, courierId } = req.body;
+  const { o_id, courierId } = req.body;
 
   let courier = await courierColelction.findOne({
-    ordersAccepted: { $elemMatch: { orderId: orderId } },
+    ordersAccepted: { $elemMatch: { o_id: o_id } },
   });
 
   if (courier) {
-    await OrderPickedUpEvent(orderId, courierId);
+    await OrderPickedUpEvent(o_id, courierId);
     return res.status(200).send({ message: "Order picked up" });
   } else {
     return res.status(404).send({ message: "Courier not found" });
@@ -160,21 +160,21 @@ exports.orderDelivered = async (req, res) => {
   let db = await dbConnection.get();
   let courierColelction = db.collection("users");
 
-  const { orderId } = req.body;
+  const { o_id } = req.body;
 
   let courier = await courierColelction.findOne({
-    ordersAccepted: { $elemMatch: { orderId: orderId } },
+    ordersAccepted: { $elemMatch: { o_id: o_id } },
   });
 
-  if (courier) {
-    await courierColelction.updateOne(
-      { _id: ObjectId(courier._id) },
-      { $pull: { ordersAccepted: { orderId: orderId } } }
-    );
-
-    await OrderDeliveredEvent(orderId);
-    res.status(200).send({ message: "Order delivered" });
-  } else {
-    res.status(404).send({ message: "Courier not found" });
+  if (courier === null) {
+    return res.status(404).send({ message: "Courier not found" });
   }
+
+  await courierColelction.updateOne(
+    { _id: ObjectId(courier._id) },
+    { $pull: { ordersAccepted: { o_id: o_id } } }
+  );
+
+  await OrderDeliveredEvent(o_id);
+  res.status(200).send({ message: "Order delivered" });
 };
