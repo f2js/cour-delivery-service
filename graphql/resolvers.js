@@ -4,20 +4,20 @@ module.exports = {
       return dataSources.deliveryRESTAPI.getOrdersReadyForPickup(o_id);
     },
 
-    acceptOrder: async (parent, { orderId, courierId }, { dataSources }) => {
-      return dataSources.deliveryRESTAPI.acceptOrder(orderId, courierId);
+    acceptOrder: async (parent, { o_id, courierId }, { dataSources }) => {
+      return dataSources.deliveryRESTAPI.acceptOrder(o_id, courierId);
     },
 
-    rejectOrder: async (parent, { orderId, courierId }, { dataSources }) => {
-      return dataSources.deliveryRESTAPI.rejectOrder(orderId, courierId);
+    rejectOrder: async (parent, { o_id, courierId }, { dataSources }) => {
+      return dataSources.deliveryRESTAPI.rejectOrder(o_id, courierId);
     },
 
-    orderPickedUp: async (parent, { orderId, courierId }, { dataSources }) => {
-      return dataSources.deliveryRESTAPI.orderPickedUp(orderId, courierId);
+    orderPickedUp: async (parent, { o_id, courierId }, { dataSources }) => {
+      return dataSources.deliveryRESTAPI.orderPickedUp(o_id, courierId);
     },
 
-    orderDelivered: async (parent, { orderId, courierId }, { dataSources }) => {
-      return dataSources.deliveryRESTAPI.orderDelivered(orderId, courierId);
+    orderDelivered: async (parent, { o_id }, { dataSources }) => {
+      return dataSources.deliveryRESTAPI.orderDelivered(o_id);
     },
   },
 };

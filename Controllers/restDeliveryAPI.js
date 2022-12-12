@@ -15,31 +15,31 @@ class DeliveryRESTAPI extends RESTDataSource {
     return orders.map((order) => this.mapResults(order));
   }
 
-  async acceptOrder(orderId, courierId) {
+  async acceptOrder(o_id, courierId) {
     const { message } = await this.post("ordersReady/accept", {
-      body: { orderId, courierId },
+      body: { o_id, courierId },
     });
     return message;
   }
 
-  async rejectOrder(orderId, courierId) {
+  async rejectOrder(o_id, courierId) {
     const { message } = await this.post("orderRejected", {
-      body: { orderId, courierId },
+      body: { o_id, courierId },
     });
     return message;
   }
 
-  async orderPickedUp(orderId) {
+  async orderPickedUp(o_id) {
     const { message } = await this.post("orderPickedUp", {
-      body: { orderId },
+      body: { o_id },
     });
 
     return message;
   }
 
-  async orderDelivered(orderId) {
+  async orderDelivered(o_id) {
     const { message } = await this.post("orderDelivered", {
-      body: { orderId },
+      body: { o_id },
     });
 
     return message;

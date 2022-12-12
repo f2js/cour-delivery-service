@@ -28,11 +28,8 @@ const user4 = {
   ordersAccepted: [],
 };
 
-order1 = { orderId: 2, postalCode: 4000 };
+order1 = { o_id: 2, postalCode: 4000 };
 
-order2 = { orderId: 3, postalCode: 3000 };
+order2 = { o_id: 3, postalCode: 3000 };
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzdiYmU1ZmVjZjhhMTAxM2M5MGIxNDAiLCJ1c2VybmFtZSI6InRlc3QiLCJlbWFpbCI6InRlc3RAZ2V0LmNvbSIsImZpcnN0bmFtZSI6IkZyZWRlcmlrIiwibGFzdG5hbWUiOiJEYWhsIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjkwNTQwNjV9.6D0GofcmGE3nONbMa_e8zw395TPmemH4d4sVqyTBNZM";
-
-module.exports = { user1, user2, user3, user4, token, order1, order2 };
+module.exports = { user1, user2, user3, user4, order1, order2 };
