@@ -13,7 +13,7 @@ const dbConnection = require("./Services/DBConnection");
 
 const app = require("./app");
 
-const port = process.env.API_PORT || 3001;
+const port = 3000;
 
 const config = {
   port: port,
