@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: cour-delivery
+  labels:
+    app.kubernetes.io/name: cour-delivery
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cour-delivery
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cour-delivery
+    spec:
+      containers:
+        - name: cour-delivery-container-replicaset
+          image: f2js/cour-delivery:latest
