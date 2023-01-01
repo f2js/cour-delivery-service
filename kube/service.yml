@@ -3,19 +3,16 @@ kind: Service
 metadata:
   name: cour-delivery-service
   namespace: default
-  annotations:
-    service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
-    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "${CERT}"
   labels:
     app: web
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - name: "graphql"
       port: 4001
       targetPort: 4001
-    - name: "rest" # - a static port assigned on each the node
-      port: 3000 # - port exposed internally in the cluster
-      targetPort: 3000 # - the container port to send requests to
+    - name: "rest"
+      port: 3000
+      targetPort: 3000
   selector:
     app.kubernetes.io/name: cour-delivery
